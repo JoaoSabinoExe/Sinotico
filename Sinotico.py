@@ -14,13 +14,15 @@ def limpar_campos():
     input_login_entry.delete(0, ctk.END)
     input_senha_entry.delete(0, ctk.END)
     input_time_set_entry.delete(0, ctk.END)
+    input_time_page_entry.delete(0, ctk.END)
 
 def iniciar_programa():
 
     global mensagem
 
     #Variaveis que vieram do input da interface grafica
-    time_set = int(input_time_set_entry.get())
+    time_set = float(input_time_set_entry.get())
+    time_page = float(input_time_set_entry.get())
     login = str(input_login_entry.get())
     senha = str(input_senha_entry.get())
 
@@ -97,7 +99,7 @@ def iniciar_programa():
                 navegador.find_element(By.XPATH, '//*[@id="uscTratarEventos_chkMarcarTodos"]').click()
                 navegador.find_element(By.XPATH, '//*[@id="uscTratarEventos_btnTratarSelecionados"]').click()
 
-                time.sleep(time_set)
+                time.sleep(time_page)
 
                 selecionar_elemento = navegador.find_element(By.XPATH, '//*[@id="uscComponenteMensagemEvento_ddlMotivo"]')
                 selecionar = Select(selecionar_elemento)
@@ -114,8 +116,8 @@ def iniciar_programa():
         except Exception as erro_tratativa:
             mensagem = "Não foi possivel realizar esta ação"
             mensagem += f"{str(erro_tratativa)}"
+            adicionar_mensagem()
 
-        adicionar_mensagem()
 
     #Adicionando o comando para a funcao acao
     keyboard.add_hotkey('shift+w', acao)
@@ -131,12 +133,12 @@ interface.geometry("500x450")
 
 ctk.set_appearance_mode("dark")
 
-interface.title('Sinótico 1.0.0.0')
+interface.title('Sinótico 1.0.0.1')
 
 primeiro_texto = ctk.CTkLabel(interface, text='Sinótico', font=("Arial", 25))
 primeiro_texto.place(relx=0.5, rely=0.1, anchor="center")
 
-segundo_texto = ctk.CTkLabel(interface, text='1.0.0.0')
+segundo_texto = ctk.CTkLabel(interface, text='1.0.0.1')
 segundo_texto.place(relx=0.5, rely=0.2, anchor="center")
 
 terceiro_texto = ctk.CTkLabel(interface, text='Atalho: SHIFT + W')
@@ -148,8 +150,11 @@ input_login_entry.place(relx=0.5, rely=0.4, anchor="center")
 input_senha_entry = ctk.CTkEntry(interface, placeholder_text="Sua senha")
 input_senha_entry.place(relx=0.5, rely=0.5, anchor="center")
 
-input_time_set_entry = ctk.CTkEntry(interface, placeholder_text="Time_Set")
-input_time_set_entry.place(relx=0.5, rely=0.6, anchor="center")
+input_time_set_entry = ctk.CTkEntry(interface, placeholder_text="Time_Set", width=80)
+input_time_set_entry.place(relx=0.4, rely=0.6, anchor="center")
+
+input_time_page_entry = ctk.CTkEntry(interface, placeholder_text="Time_Page", width=80)
+input_time_page_entry.place(relx=0.6, rely=0.6, anchor="center")
 
 botao_iniciar = ctk.CTkButton(interface, text='Iniciar', command=iniciar_programa)
 botao_iniciar.place(relx=0.5, rely=0.7, anchor="center")
