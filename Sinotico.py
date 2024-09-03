@@ -16,6 +16,12 @@ def limpar_campos():
     input_time_set_entry.delete(0, ctk.END)
     input_time_page_entry.delete(0, ctk.END)
 
+def mostrar_ocultar_senha():
+    if input_senha_entry.cget('show') == '':
+        input_senha_entry.configure(show='*')
+    else:
+        input_senha_entry.configure(show='')
+
 def iniciar_programa():
 
     global mensagem
@@ -133,12 +139,12 @@ interface.geometry("500x450")
 
 ctk.set_appearance_mode("dark")
 
-interface.title('Sinótico 1.0.0.1')
+interface.title('Sinótico 1.0.0.2')
 
 primeiro_texto = ctk.CTkLabel(interface, text='Sinótico', font=("Arial", 25))
 primeiro_texto.place(relx=0.5, rely=0.1, anchor="center")
 
-segundo_texto = ctk.CTkLabel(interface, text='1.0.0.1')
+segundo_texto = ctk.CTkLabel(interface, text='1.0.0.2')
 segundo_texto.place(relx=0.5, rely=0.2, anchor="center")
 
 terceiro_texto = ctk.CTkLabel(interface, text='Atalho: SHIFT + W')
@@ -147,8 +153,11 @@ terceiro_texto.place(relx=0.5, rely=0.3, anchor="center")
 input_login_entry = ctk.CTkEntry(interface, placeholder_text="Seu login")
 input_login_entry.place(relx=0.5, rely=0.4, anchor="center")
 
-input_senha_entry = ctk.CTkEntry(interface, placeholder_text="Sua senha")
+input_senha_entry = ctk.CTkEntry(interface, placeholder_text="Sua senha", show='*')
 input_senha_entry.place(relx=0.5, rely=0.5, anchor="center")
+
+mostrar_ocultar_senha_combobox = ctk.CTkCheckBox(interface, text='Mostrar', command=mostrar_ocultar_senha, checkbox_height=20, checkbox_width=20, border_width=1)
+mostrar_ocultar_senha_combobox.place(relx=0.76, rely=0.5, anchor="center")
 
 input_time_set_entry = ctk.CTkEntry(interface, placeholder_text="Time_Set", width=80)
 input_time_set_entry.place(relx=0.4, rely=0.6, anchor="center")
