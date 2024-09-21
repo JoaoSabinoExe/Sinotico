@@ -7,6 +7,7 @@ from selenium.webdriver.support.ui import Select
 import customtkinter as ctk
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver import ActionChains
 
 mensagem = ""
 
@@ -142,25 +143,53 @@ def iniciar_programa():
     #Adicionando o comando para a funcao tratar_sinotico
     keyboard.add_hotkey('shift+w', tratar_sinotico)
 
-    # def tratar_verdinho():
+    def tratar_verdinho():
 
-    #     global mensagem
+        global mensagem
 
-    #     try:
-    #         navegador.find_element(By.XPATH, '//*[@idempresa="vb1@transportes.com.br"]').click()
-    #         navegador.find_element(By.XPATH, '//*[@idempresa="vb1@transportes.com.br"]').click()
-            
-    #         # navegador.find_element(By.XPATH, '//*[@id="uscVisualizadorEventos_dtlListagemEventos_uscItemResumoEvento_0_lnkTratarEvento_0"]').click()
-    #         # tratar_sinotico()
-    #         # navegador.find_element(By.XPATH, '//*[@id="uscVisualizadorEventos_btnFechar"]').click()
-    #         # navegador.find_element(By.XPATH, '//*[@id="btnBuscar"]').click()
-    #     except Exception as erro_verdinho:
-    #         mensagem = "Não foi possivel realizar esta ação\n"
-    #         mensagem += f"{str(erro_verdinho).splitlines()[:4]}"
-    #         adicionar_mensagem()
+        try:
+            for tratador_verdinho_for in range(10):
+                duplo_click_verdinho = navegador.find_element(By.XPATH, '//ul[@class="normal"]//li[@idempresa="vb1@transportes.com.br"]')
 
-    # #Adicionando o comando para a funcao tratar_verdinho
-    # keyboard.add_hotkey('shift+e', tratar_verdinho)
+                instancia_actionchains = ActionChains(navegador)
+
+                instancia_actionchains.double_click(duplo_click_verdinho).perform() 
+
+                espera_primeiro_item_tratavel_verdinho = WebDriverWait(navegador, 10).until(
+                    EC.visibility_of_element_located((By.XPATH, '//*[@id="uscVisualizadorEventos_dtlListagemEventos_uscItemResumoEvento_0_lnkTratarEvento_0"]'))
+                )
+
+                espera_primeiro_item_tratavel_verdinho.click()
+
+                espera_carregar_componente_tratar = WebDriverWait(navegador, 10).until(
+                    EC.visibility_of_element_located((By.XPATH, '//*[@id="uscTratarEventos_btnTratar"]'))
+                )
+
+                tratar_sinotico()
+
+                espera_componente_fechar_verdinho = WebDriverWait(navegador, 10).until(
+                    EC.visibility_of_element_located((By.XPATH, '//*[@id="uscVisualizadorEventos_btnFechar"]'))
+                )
+
+                espera_componente_fechar_verdinho.click()
+
+                espera_componente_buscar_verdinho = WebDriverWait(navegador, 10).until(
+                    EC.visibility_of_element_located((By.XPATH, '//*[@id="btnBuscar"]'))
+                )
+
+                espera_componente_buscar_verdinho.click()
+
+                if keyboard.is_pressed('esc'):
+                    break
+
+
+        except Exception as erro_verdinho:
+            mensagem = "Não foi possivel realizar esta ação\n"
+            mensagem += f"{str(erro_verdinho).splitlines()[:4]}"
+            adicionar_mensagem()
+
+    #Adicionando o comando para a funcao tratar_verdinho
+    keyboard.add_hotkey('shift+e', tratar_verdinho)
 
 
 def adicionar_mensagem():
@@ -173,16 +202,16 @@ interface.geometry("500x450")
 
 ctk.set_appearance_mode("dark")
 
-interface.title('Sinótico 2.0.0.0')
+interface.title('Sinótico 2.0.0.1')
 
 primeiro_texto = ctk.CTkLabel(interface, text='Sinótico', font=("Arial", 25))
 primeiro_texto.place(relx=0.5, rely=0.1, anchor="center")
 
-segundo_texto = ctk.CTkLabel(interface, text='2.0.0.0')
+segundo_texto = ctk.CTkLabel(interface, text='2.0.0.1')
 segundo_texto.place(relx=0.5, rely=0.2, anchor="center")
 
-terceiro_texto = ctk.CTkLabel(interface, text='Atalho: SHIFT + W')
-terceiro_texto.place(relx=0.5, rely=0.3, anchor="center")
+terceiro_texto = ctk.CTkLabel(interface, text='Atalho Sinotico: SHIFT + W\nAtalho Verdinho: SHIFT + E\nAtalho Encerrar Verdinho: ESC')
+terceiro_texto.place(relx=0.5, rely=0.285, anchor="center")
 
 input_login_entry = ctk.CTkEntry(interface, placeholder_text="Seu login")
 input_login_entry.place(relx=0.5, rely=0.4, anchor="center")
