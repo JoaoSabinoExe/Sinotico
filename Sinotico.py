@@ -143,17 +143,17 @@ def iniciar_programa():
     #Adicionando o comando para a funcao tratar_sinotico
     keyboard.add_hotkey('shift+w', tratar_sinotico)
 
-    def tratar_verdinho():
+    def tratar_verdinho_amarelo(duplo_click_verdinho_amarelo_xpath):
 
         global mensagem
 
         try:
             for tratador_verdinho_for in range(10):
-                duplo_click_verdinho = navegador.find_element(By.XPATH, '//ul[@class="normal"]//li[@idempresa="vb1@transportes.com.br"]')
+                duplo_click_elemento = navegador.find_element(By.XPATH, duplo_click_verdinho_amarelo_xpath)
 
                 instancia_actionchains = ActionChains(navegador)
 
-                instancia_actionchains.double_click(duplo_click_verdinho).perform() 
+                instancia_actionchains.double_click(duplo_click_elemento).perform() 
 
                 espera_primeiro_item_tratavel_verdinho = WebDriverWait(navegador, 10).until(
                     EC.visibility_of_element_located((By.XPATH, '//*[@id="uscVisualizadorEventos_dtlListagemEventos_uscItemResumoEvento_0_lnkTratarEvento_0"]'))
@@ -188,8 +188,17 @@ def iniciar_programa():
             mensagem += f"{str(erro_verdinho).splitlines()[:4]}"
             adicionar_mensagem()
 
+    def tratar_verdinho():
+        tratar_verdinho_amarelo(duplo_click_verdinho_amarelo_xpath = '//ul[@class="normal"]//li[@idempresa="vb1@transportes.com.br"]')
+    
     #Adicionando o comando para a funcao tratar_verdinho
     keyboard.add_hotkey('shift+e', tratar_verdinho)
+
+    def tratar_amarelo():
+        tratar_verdinho_amarelo(duplo_click_verdinho_amarelo_xpath = '//ul[@class="medio"]//li[@idempresa="vb1@transportes.com.br"]')
+    
+    #Adicionando o comando para a funcao tratar_amarelo
+    keyboard.add_hotkey('shift+q', tratar_amarelo)
 
 
 def adicionar_mensagem():
@@ -202,15 +211,15 @@ interface.geometry("500x450")
 
 ctk.set_appearance_mode("dark")
 
-interface.title('Sinótico 2.0.0.1')
+interface.title('Sinótico 2.0.0.2')
 
 primeiro_texto = ctk.CTkLabel(interface, text='Sinótico', font=("Arial", 25))
 primeiro_texto.place(relx=0.5, rely=0.1, anchor="center")
 
-segundo_texto = ctk.CTkLabel(interface, text='2.0.0.1')
+segundo_texto = ctk.CTkLabel(interface, text='2.0.0.2')
 segundo_texto.place(relx=0.5, rely=0.2, anchor="center")
 
-terceiro_texto = ctk.CTkLabel(interface, text='Atalho Sinotico: SHIFT + W\nAtalho Verdinho: SHIFT + E\nAtalho Encerrar Verdinho: ESC')
+terceiro_texto = ctk.CTkLabel(interface, text='Atalho Sinotico: SHIFT + W\nAtalho Verdinho: SHIFT + E\nAtalho Amarelo: SHIFT + Q')
 terceiro_texto.place(relx=0.5, rely=0.285, anchor="center")
 
 input_login_entry = ctk.CTkEntry(interface, placeholder_text="Seu login")
