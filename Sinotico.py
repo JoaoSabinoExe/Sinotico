@@ -261,12 +261,14 @@ def iniciar_programa():
 
         global mensagem
 
-        for tratar_verdinho_automatico_loop in range(50):
+        for tratar_verdinho_automatico_loop in range(100):
 
             try:
                 tratar_verdinho()
+                mensagem = "Execução Finalizada."
+                adicionar_mensagem()
 
-                for espera_nova_execucao in range(300, 0, -1):
+                for espera_nova_execucao in range(30, 0, -1):
                     if keyboard.is_pressed('esc'):
                         mensagem = "O tratador automático foi encerrado pelo usuário!"
                         adicionar_mensagem()
@@ -276,9 +278,12 @@ def iniciar_programa():
                     segundos_restantes = espera_nova_execucao % 60
 
                     mensagem = f"Próxima execução em {minutos_restantes:02d}:{segundos_restantes:02d}"
-                    atualizar_contagem_tempo()
+                    atualizar_mensagem_deletar_ultima()
                     
                     time.sleep(1)
+
+                mensagem = f"Executanto..."
+                atualizar_mensagem_deletar_ultima()
 
                 elemento_pesquisar()
             except Exception as tratar_verdinho_automatico_loop_erro:
@@ -289,7 +294,7 @@ def iniciar_programa():
 
     keyboard.add_hotkey('f9', tratar_verdinho_automatico)
 
-def atualizar_contagem_tempo():
+def atualizar_mensagem_deletar_ultima():
     caixa_log.delete("end-2l", "end-1l") 
     caixa_log.insert("end", mensagem + "\n")
     caixa_log.yview("end")
