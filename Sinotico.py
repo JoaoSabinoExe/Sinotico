@@ -27,6 +27,8 @@ def iniciar_programa():
 
     global mensagem
 
+    interface.focus()
+
     #Variaveis que vieram do input da interface grafica
     login = str(input_login_entry.get())
     senha = str(input_senha_entry.get())
@@ -210,6 +212,7 @@ def iniciar_programa():
                     instancia_actionchains = ActionChains(navegador)
 
                     instancia_actionchains.double_click(duplo_click_elemento).perform()
+
                 except Exception as erro_carregar_elemento_verdinho_amarelo:
                     mensagem = "Não foi possivel encontrar o elemento\n"
                     mensagem += f"{str(erro_carregar_elemento_verdinho_amarelo).splitlines()[:4]}"
@@ -262,16 +265,17 @@ def iniciar_programa():
         global mensagem
 
         for tratar_verdinho_automatico_loop in range(100):
-
             try:
                 tratar_verdinho()
-                mensagem = "Execução Finalizada."
+
+                mensagem = f"Execução Finalizada."
+                adicionar_mensagem()
                 adicionar_mensagem()
 
-                for espera_nova_execucao in range(30, 0, -1):
+                for espera_nova_execucao in range(300, 0, -1):
                     if keyboard.is_pressed('esc'):
                         mensagem = "O tratador automático foi encerrado pelo usuário!"
-                        adicionar_mensagem()
+                        atualizar_mensagem_deletar_ultima()
                         return
                     
                     minutos_restantes = espera_nova_execucao // 60
@@ -286,6 +290,7 @@ def iniciar_programa():
                 atualizar_mensagem_deletar_ultima()
 
                 elemento_pesquisar()
+
             except Exception as tratar_verdinho_automatico_loop_erro:
                 mensagem = "Não foi possivel realizar esta ação\n"
                 mensagem += f"{str(tratar_verdinho_automatico_loop_erro).splitlines()[:4]}"
@@ -295,17 +300,24 @@ def iniciar_programa():
     keyboard.add_hotkey('f9', tratar_verdinho_automatico)
 
 def atualizar_mensagem_deletar_ultima():
+    caixa_log.configure(state="normal")
     caixa_log.delete("end-2l", "end-1l") 
     caixa_log.insert("end", mensagem + "\n")
     caixa_log.yview("end")
+    caixa_log.configure(state="disabled")
 
 def adicionar_mensagem():
+    caixa_log.configure(state="normal")
     caixa_log.insert("end", mensagem + "\n")
     caixa_log.yview("end")
+    caixa_log.configure(state="disabled")
 
 #Interface grafica com CustomTkInter
 interface = ctk.CTk()
 interface.geometry("500x450")
+
+def iniciar_programa_enter(event):
+    iniciar_programa()
 
 ctk.set_appearance_mode("dark")
 
@@ -317,22 +329,30 @@ primeiro_texto.place(relx=0.5, rely=0.1, anchor="center")
 segundo_texto = ctk.CTkLabel(interface, text='2.0.0.3')
 segundo_texto.place(relx=0.5, rely=0.15, anchor="center")
 
-terceiro_texto = ctk.CTkLabel(interface, text='Atalho Sinotico: SHIFT + W\nAtalho Falha GPS: SHIFT + E\nAtalho Verdinho: F2\nAtalho Amarelo: F8\nAtalho Verdinho Automático: F9')
-terceiro_texto.place(relx=0.5, rely=0.26, anchor="center")
+terceiro_texto = ctk.CTkLabel(interface, text='Atalhos:', font=("Arial", 20))
+terceiro_texto.place(relx=0.01, rely=0.0, anchor="nw")
+
+terceiro_texto = ctk.CTkLabel(interface, text='Sinotico: SHIFT + W\nFalha de GPS: SHIFT + E\nVerdinho: F2\nAmarelo: F8\nVerdinho Automático: F9\nEncerrar Automático: ESC', justify = "left")
+terceiro_texto.place(relx=0.01, rely=0.05, anchor="nw")
 
 input_login_entry = ctk.CTkEntry(interface, placeholder_text="Seu login")
-input_login_entry.place(relx=0.5, rely=0.4, anchor="center")
+input_login_entry.place(relx=0.5, rely=0.25, anchor="center")
 
 input_senha_entry = ctk.CTkEntry(interface, placeholder_text="Sua senha", show='*')
-input_senha_entry.place(relx=0.5, rely=0.5, anchor="center")
+input_senha_entry.place(relx=0.5, rely=0.35, anchor="center")
 
 mostrar_ocultar_senha_combobox = ctk.CTkCheckBox(interface, text='Mostrar', command=mostrar_ocultar_senha, checkbox_height=20, checkbox_width=20, border_width=1)
-mostrar_ocultar_senha_combobox.place(relx=0.76, rely=0.5, anchor="center")
+mostrar_ocultar_senha_combobox.place(relx=0.76, rely=0.35, anchor="center")
 
 botao_iniciar = ctk.CTkButton(interface, text='Iniciar', command=iniciar_programa)
-botao_iniciar.place(relx=0.5, rely=0.6, anchor="center")
+botao_iniciar.place(relx=0.5, rely=0.45, anchor="center")
 
-caixa_log = ctk.CTkTextbox(interface, width=400, height=150, wrap="word")
-caixa_log.place(relx=0.5, rely=0.816, anchor="center")
+caixa_log = ctk.CTkTextbox(interface, width=400, height=220, wrap="word")
+caixa_log.place(relx=0.5, rely=0.742, anchor="center")
+
+caixa_log.configure(state="disabled")
+
+input_login_entry.bind('<Return>', iniciar_programa_enter)
+input_senha_entry.bind('<Return>', iniciar_programa_enter)
 
 interface.mainloop()
