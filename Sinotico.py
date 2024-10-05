@@ -204,7 +204,7 @@ def iniciar_programa():
 
                 try:
                     espera_carregar_componente_verdinho_amarelinho = WebDriverWait(navegador, 10).until(
-                        EC.visibility_of_element_located((By.XPATH, duplo_click_verdinho_amarelo_xpath))
+                        EC.visibility_of_element_located((By.XPATH, '//*[@id="btnBuscar"]'))
                     )
 
                     duplo_click_elemento = navegador.find_element(By.XPATH, duplo_click_verdinho_amarelo_xpath)
@@ -226,8 +226,7 @@ def iniciar_programa():
                 except Exception as erro_selecionar_primeiro_item_tratavel:
                     elemento_fechar()
                     elemento_pesquisar()
-                    mensagem = "Não foi possivel encontrar o primeiro item tratavel\n"
-                    mensagem += f"{str(erro_selecionar_primeiro_item_tratavel).splitlines()[:4]}"
+                    mensagem = "Não foi possivel encontrar o primeiro item tratavel"
                     adicionar_mensagem()
                     return
 
@@ -272,7 +271,7 @@ def iniciar_programa():
                 adicionar_mensagem()
                 adicionar_mensagem()
 
-                for espera_nova_execucao in range(300, 0, -1):
+                for espera_nova_execucao in range(30, 0, -1):
                     if keyboard.is_pressed('esc'):
                         mensagem = "O tratador automático foi encerrado pelo usuário!"
                         atualizar_mensagem_deletar_ultima()
