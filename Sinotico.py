@@ -208,16 +208,32 @@ def iniciar_programa():
                     )
 
                     duplo_click_elemento = navegador.find_element(By.XPATH, duplo_click_verdinho_amarelo_xpath)
-
                     instancia_actionchains = ActionChains(navegador)
-
                     instancia_actionchains.double_click(duplo_click_elemento).perform()
 
-                except Exception as erro_carregar_elemento_verdinho_amarelo:
-                    mensagem = "Não foi possivel encontrar o elemento\n"
-                    mensagem += f"{str(erro_carregar_elemento_verdinho_amarelo).splitlines()[:4]}"
-                    adicionar_mensagem()
-                    return
+                except Exception:
+                    try:
+                        time.sleep(1)
+
+                        duplo_click_elemento = navegador.find_element(By.XPATH, duplo_click_verdinho_amarelo_xpath)
+                        instancia_actionchains = ActionChains(navegador)
+                        instancia_actionchains.double_click(duplo_click_elemento).perform()
+                    
+                    except Exception:
+                        try:
+                            elemento_pesquisar
+
+                            time.sleep(1)
+
+                            duplo_click_elemento = navegador.find_element(By.XPATH, duplo_click_verdinho_amarelo_xpath)
+                            instancia_actionchains = ActionChains(navegador)
+                            instancia_actionchains.double_click(duplo_click_elemento).perform()
+
+                        except Exception as erro_carregar_elemento_verdinho_amarelo:
+                            mensagem = "Não foi possivel encontrar o elemento\n"
+                            mensagem += f"{str(erro_carregar_elemento_verdinho_amarelo).splitlines()[:4]}"
+                            adicionar_mensagem()
+                            return
 
                 try:
                     espera_primeiro_item_tratavel = WebDriverWait(navegador, 10).until(
@@ -238,7 +254,22 @@ def iniciar_programa():
 
                 tratar_sinotico()
 
-                elemento_fechar()
+                try:
+                    elemento_fechar()
+                except Exception:
+                    try:
+                        tratar_sinotico()
+                        elemento_fechar()
+                    except Exception:
+                        try:
+                            tratar_sinotico()
+                            elemento_fechar()
+                        except Exception  as nova_tentativa_tratar_sinotico:
+                            mensagem = "Não foi possivel tratar o sinótico corretamente.\n"
+                            mensagem += f"{str(nova_tentativa_tratar_sinotico).splitlines()[:4]}"
+                            adicionar_mensagem()
+                            return
+                
                 elemento_pesquisar()
 
         except Exception as erro_verdinho_amarelo:
@@ -271,7 +302,7 @@ def iniciar_programa():
                 adicionar_mensagem()
                 adicionar_mensagem()
 
-                for espera_nova_execucao in range(30, 0, -1):
+                for espera_nova_execucao in range(300, 0, -1):
                     if keyboard.is_pressed('esc'):
                         mensagem = "O tratador automático foi encerrado pelo usuário!"
                         atualizar_mensagem_deletar_ultima()
