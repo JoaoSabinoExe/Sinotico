@@ -211,9 +211,16 @@ def iniciar_programa():
                     return
 
                 try:
-                    espera_carregar_componente_verdinho_amarelinho = WebDriverWait(navegador, 10).until(
-                        EC.visibility_of_element_located((By.XPATH, '//*[@id="btnBuscar"]'))
+
+                    WebDriverWait(navegador, 10).until(
+                        EC.invisibility_of_element_located((By.CLASS_NAME, "loadmask"))
                     )
+
+                    espera_carregar_componente_verdinho_amarelinho = WebDriverWait(navegador, 10).until(
+                        EC.visibility_of_element_located((By.XPATH, duplo_click_verdinho_amarelo_xpath))
+                    )
+
+                    espera_carregar_componente_verdinho_amarelinho.click()
 
                     duplo_click_elemento = navegador.find_element(By.XPATH, duplo_click_verdinho_amarelo_xpath)
                     instancia_actionchains = ActionChains(navegador)
@@ -227,24 +234,14 @@ def iniciar_programa():
                         instancia_actionchains = ActionChains(navegador)
                         instancia_actionchains.double_click(duplo_click_elemento).perform()
                     
-                    except Exception:
-                        try:
-                            elemento_pesquisar
-
-                            time.sleep(1)
-
-                            duplo_click_elemento = navegador.find_element(By.XPATH, duplo_click_verdinho_amarelo_xpath)
-                            instancia_actionchains = ActionChains(navegador)
-                            instancia_actionchains.double_click(duplo_click_elemento).perform()
-
-                        except Exception as erro_carregar_elemento_verdinho_amarelo:
-                            mensagem = "Não foi possivel encontrar o elemento\n"
-                            mensagem += f"{str(erro_carregar_elemento_verdinho_amarelo).splitlines()[:4]}"
-                            adicionar_mensagem()
-                            return
+                    except Exception as erro_carregar_elemento_verdinho_amarelo:
+                        mensagem = "Não foi possivel encontrar o elemento\n"
+                        mensagem += f"{str(erro_carregar_elemento_verdinho_amarelo).splitlines()[:4]}"
+                        adicionar_mensagem()
+                        return
 
                 try:
-                    espera_primeiro_item_tratavel = WebDriverWait(navegador, 10).until(
+                    espera_primeiro_item_tratavel = WebDriverWait(navegador, 5).until(
                         EC.visibility_of_element_located((By.XPATH, '//*[@id="uscVisualizadorEventos_dtlListagemEventos_uscItemResumoEvento_0_lnkTratarEvento_0"]'))
                     )
                 except Exception as erro_selecionar_primeiro_item_tratavel:
@@ -256,7 +253,7 @@ def iniciar_programa():
 
                 espera_primeiro_item_tratavel.click()
 
-                espera_carregar_componente_tratar = WebDriverWait(navegador, 10).until(
+                WebDriverWait(navegador, 10).until(
                     EC.visibility_of_element_located((By.XPATH, '//*[@id="uscTratarEventos_btnTratar"]'))
                 )
 
@@ -357,7 +354,7 @@ interface.geometry("500x450")
 def iniciar_programa_enter(event):
     iniciar_programa()
 
-interface.title('Sinótico 2.1.0')
+interface.title('Sinótico 2.1.1')
 
 tema_app = ctk.CTkComboBox(interface, values=["System", "Light", "Dark"], command=mostrar_tema_branco_preto, state="readonly", width=80, height=20)
 tema_app.place(relx=0.91, rely=0.01, anchor="n")
@@ -371,7 +368,7 @@ tema_app_text.place(relx=0.782, rely=0.003, anchor="n")
 primeiro_texto = ctk.CTkLabel(interface, text='Sinótico', font=("Arial", 25))
 primeiro_texto.place(relx=0.5, rely=0.1, anchor="center")
 
-segundo_texto = ctk.CTkLabel(interface, text='2.1.0')
+segundo_texto = ctk.CTkLabel(interface, text='2.1.1')
 segundo_texto.place(relx=0.5, rely=0.16, anchor="center")
 
 terceiro_texto = ctk.CTkLabel(interface, text='Atalhos:', font=("Arial", 20))
