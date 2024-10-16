@@ -105,7 +105,7 @@ def iniciar_programa():
 
         elemento_espera_pesquisar.click()
 
-        mensagem = 'Carregamento de páginas concluido.'
+        mensagem = 'Carregamento de páginas concluído.'
 
     #Caso de erro no programa sera imprimido uma mensagem de erro
     except Exception as erro_sinotico:
@@ -178,7 +178,7 @@ def iniciar_programa():
                 tratar_sinotico()
 
         except Exception as tratar_falha_gps_erro:
-            mensagem = "Não foi possivel realizar esta ação\n"
+            mensagem = "Não foi possível realizar esta ação.\n"
             mensagem += f"{str(tratar_falha_gps_erro).splitlines()[:4]}"
             adicionar_mensagem()
 
@@ -206,7 +206,7 @@ def iniciar_programa():
             for tratador_verdinho_for in range(1000):
 
                 if keyboard.is_pressed("esc"):
-                    mensagem = "O looping foi encerrado pelo usuário!"
+                    mensagem = "O tratador foi encerrado pelo usuário!"
                     adicionar_mensagem()
                     return
 
@@ -235,8 +235,7 @@ def iniciar_programa():
                         instancia_actionchains.double_click(duplo_click_elemento).perform()
                     
                     except Exception as erro_carregar_elemento_verdinho_amarelo:
-                        mensagem = "Não foi possivel encontrar o elemento\n"
-                        mensagem += f"{str(erro_carregar_elemento_verdinho_amarelo).splitlines()[:4]}"
+                        mensagem = "Não foi possível encontrar o primeiro elemento tratável."
                         adicionar_mensagem()
                         return
 
@@ -247,7 +246,7 @@ def iniciar_programa():
                 except Exception as erro_selecionar_primeiro_item_tratavel:
                     elemento_fechar()
                     elemento_pesquisar()
-                    mensagem = "Não foi possivel encontrar o primeiro item tratavel"
+                    mensagem = "Não foi possível encontrar o primeiro item tratável."
                     adicionar_mensagem()
                     return
 
@@ -270,15 +269,19 @@ def iniciar_programa():
                             tratar_sinotico()
                             elemento_fechar()
                         except Exception  as nova_tentativa_tratar_sinotico:
-                            mensagem = "Não foi possivel tratar o sinótico corretamente.\n"
+                            mensagem = "Não foi possível tratar o sinótico corretamente.\n"
                             mensagem += f"{str(nova_tentativa_tratar_sinotico).splitlines()[:4]}"
                             adicionar_mensagem()
                             return
                 
+                WebDriverWait(navegador, 10).until(
+                    EC.invisibility_of_element_located((By.CLASS_NAME, "loadmask"))
+                    )
+
                 elemento_pesquisar()
 
         except Exception as erro_verdinho_amarelo:
-            mensagem = "Não foi possivel realizar esta ação\n"
+            mensagem = "Não foi possível realizar esta ação.\n"
             mensagem += f"{str(erro_verdinho_amarelo).splitlines()[:4]}"
             adicionar_mensagem()
             return
@@ -327,7 +330,7 @@ def iniciar_programa():
                 elemento_pesquisar()
 
             except Exception as tratar_verdinho_automatico_loop_erro:
-                mensagem = "Não foi possivel realizar esta ação\n"
+                mensagem = "Não foi possível realizar esta ação.\n"
                 mensagem += f"{str(tratar_verdinho_automatico_loop_erro).splitlines()[:4]}"
                 adicionar_mensagem()
                 return
@@ -354,7 +357,7 @@ interface.geometry("500x450")
 def iniciar_programa_enter(event):
     iniciar_programa()
 
-interface.title('Sinótico 2.1.1')
+interface.title('Sinótico 2.1.2')
 
 tema_app = ctk.CTkComboBox(interface, values=["System", "Light", "Dark"], command=mostrar_tema_branco_preto, state="readonly", width=80, height=20)
 tema_app.place(relx=0.91, rely=0.01, anchor="n")
@@ -368,7 +371,7 @@ tema_app_text.place(relx=0.782, rely=0.003, anchor="n")
 primeiro_texto = ctk.CTkLabel(interface, text='Sinótico', font=("Arial", 25))
 primeiro_texto.place(relx=0.5, rely=0.1, anchor="center")
 
-segundo_texto = ctk.CTkLabel(interface, text='2.1.1')
+segundo_texto = ctk.CTkLabel(interface, text='2.1.2')
 segundo_texto.place(relx=0.5, rely=0.16, anchor="center")
 
 terceiro_texto = ctk.CTkLabel(interface, text='Atalhos:', font=("Arial", 20))
