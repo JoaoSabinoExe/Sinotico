@@ -354,10 +354,13 @@ def adicionar_mensagem():
 interface = ctk.CTk()
 interface.geometry("500x450")
 
+interface.minsize(500, 450)
+interface.maxsize(500, 450)
+
 def iniciar_programa_enter(event):
     iniciar_programa()
 
-interface.title('Sinótico 2.1.2')
+interface.title('Sinótico 2.1.3')
 
 tema_app = ctk.CTkComboBox(interface, values=["System", "Light", "Dark"], command=mostrar_tema_branco_preto, state="readonly", width=80, height=20)
 tema_app.place(relx=0.91, rely=0.01, anchor="n")
@@ -371,7 +374,7 @@ tema_app_text.place(relx=0.782, rely=0.003, anchor="n")
 primeiro_texto = ctk.CTkLabel(interface, text='Sinótico', font=("Arial", 25))
 primeiro_texto.place(relx=0.5, rely=0.1, anchor="center")
 
-segundo_texto = ctk.CTkLabel(interface, text='2.1.2')
+segundo_texto = ctk.CTkLabel(interface, text='2.1.3')
 segundo_texto.place(relx=0.5, rely=0.16, anchor="center")
 
 terceiro_texto = ctk.CTkLabel(interface, text='Atalhos:', font=("Arial", 20))
