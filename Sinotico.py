@@ -8,6 +8,7 @@ import customtkinter as ctk
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver import ActionChains
+import pyautogui
 import time
 
 mensagem = ""
@@ -310,6 +311,10 @@ def iniciar_programa():
                 adicionar_mensagem()
                 adicionar_mensagem()
 
+                pyautogui.move(50, 50)
+                pyautogui.move(-50, -50)
+                pyautogui.press('left')
+
                 for espera_nova_execucao in range(300, 0, -1):
                     if keyboard.is_pressed('esc'):
                         mensagem = "O tratador automático foi encerrado pelo usuário!"
@@ -360,7 +365,7 @@ interface.maxsize(500, 450)
 def iniciar_programa_enter(event):
     iniciar_programa()
 
-interface.title('Sinótico 2.1.3')
+interface.title('Sinótico 2.1.4')
 
 tema_app = ctk.CTkComboBox(interface, values=["System", "Light", "Dark"], command=mostrar_tema_branco_preto, state="readonly", width=80, height=20)
 tema_app.place(relx=0.91, rely=0.01, anchor="n")
@@ -374,7 +379,7 @@ tema_app_text.place(relx=0.782, rely=0.003, anchor="n")
 primeiro_texto = ctk.CTkLabel(interface, text='Sinótico', font=("Arial", 25))
 primeiro_texto.place(relx=0.5, rely=0.1, anchor="center")
 
-segundo_texto = ctk.CTkLabel(interface, text='2.1.3')
+segundo_texto = ctk.CTkLabel(interface, text='2.1.4')
 segundo_texto.place(relx=0.5, rely=0.16, anchor="center")
 
 terceiro_texto = ctk.CTkLabel(interface, text='Atalhos:', font=("Arial", 20))
