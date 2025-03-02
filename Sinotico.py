@@ -169,11 +169,11 @@ def iniciar_programa():
 
             if nome_elemento == 'Cumprimento de Partidas':
 
-                tratar_elementos_sinotico('SS - FALHA DE GPS')
+                tratar_elementos_sinotico('SS - FALHA DE PROCESSAMENTO GOOL SYSTEM')
 
             elif nome_elemento == 'Cumprimento de Viagem':
 
-                tratar_elementos_sinotico('SS - FALHA DE GPS')
+                tratar_elementos_sinotico('SS - FALHA DE PROCESSAMENTO GOOL SYSTEM')
 
             else:
                 tratar_sinotico()
@@ -365,7 +365,7 @@ interface.maxsize(500, 450)
 def iniciar_programa_enter(event):
     iniciar_programa()
 
-interface.title('Sinótico 2.2.0')
+interface.title('Sinótico 2.2.1')
 
 tema_app = ctk.CTkComboBox(interface, values=["System", "Light", "Dark"], command=mostrar_tema_branco_preto, state="readonly", width=80, height=20)
 tema_app.place(relx=0.91, rely=0.01, anchor="n")
@@ -379,13 +379,13 @@ tema_app_text.place(relx=0.782, rely=0.003, anchor="n")
 primeiro_texto = ctk.CTkLabel(interface, text='Sinótico', font=("Arial", 25))
 primeiro_texto.place(relx=0.5, rely=0.1, anchor="center")
 
-segundo_texto = ctk.CTkLabel(interface, text='2.2.0')
+segundo_texto = ctk.CTkLabel(interface, text='2.2.1')
 segundo_texto.place(relx=0.5, rely=0.16, anchor="center")
 
 terceiro_texto = ctk.CTkLabel(interface, text='Atalhos:', font=("Arial", 20))
 terceiro_texto.place(relx=0.01, rely=0.0, anchor="nw")
 
-terceiro_texto = ctk.CTkLabel(interface, text='Sinotico: SHIFT + W\nFalha de GPS: SHIFT + E\nVerdinho: F2\nAmarelo: F8\nVerdinho Automático: F9\nEncerrar Automático: ESC', justify = "left")
+terceiro_texto = ctk.CTkLabel(interface, text='Sinótico: SHIFT + W\nFalha de GPS: SHIFT + E\nVerdinho: F2\nAmarelo: F8\nVerdinho Automático: F9\nEncerrar Automático: ESC', justify = "left")
 terceiro_texto.place(relx=0.01, rely=0.05, anchor="nw")
 
 input_login_entry = ctk.CTkEntry(interface, placeholder_text="Seu login")
